@@ -10,28 +10,42 @@
     var last_point = [51.7593908,19.4585151];
 
     var map = L.map('map').addLayer(osm);
-
     var polyline = L.polyline(geo, {color: 'red'}).addTo(map);
     L.marker(first_point, {color: 'blue'}).addTo(map);
-    L.marker(last_point, {color: 'green'}).addTo(map);
-
+    L.marker(last_point, {color: 'red'}).addTo(map);
     map.fitBounds(polyline.getBounds());
 
-    map.on('dragend', function onDragEnd(){
-        var width = map.getBounds().getEast() - map.getBounds().getWest();
-        var height = map.getBounds().getNorth() - map.getBounds().getSouth();
-        var east = map.getBounds().getEast();
-        var west = map.getBounds().getWest();
-        var north = map.getBounds().getNorth();
-        var south = map.getBounds().getSouth();
 
-        alert (
-            'center:' + map.getCenter() +'\n'+
-            'width:' + width +'\n'+
-            'height:' + height +'\n'+
-            'size in pixels:' + map.getSize()+
-            '\neast: ' + east+
-            '\nwest: ' + west+
-            '\nnorth: ' + north+
-            '\nsouth: ' + south
-        )});
+
+    map.on('dragend', function onDragEnd(){
+    var width = map.getBounds().getEast() - map.getBounds().getWest();
+    var height = map.getBounds().getNorth() - map.getBounds().getSouth();
+    var east = map.getBounds().getEast();
+    var west = map.getBounds().getWest();
+    var north = map.getBounds().getNorth();
+    var south = map.getBounds().getSouth();
+
+
+    alert (
+        'center:' + map.getCenter() +'\n'+
+        'width:' + width +'\n'+
+        'height:' + height +'\n'+
+        'size in pixels:' + map.getSize()+
+        '\neast: ' + east+
+        '\nwest: ' + west+
+        '\nnorth: ' + north+
+        '\nsouth: ' + south+ '\n\n'+
+        httpGet('https://api.openstreetmap.org/api/0.6/map?bbox='+west+','+south+','+east+','+north)
+    )});
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    center(xmlHttp.responseText);
+    return xmlHttp.responseText;
+}
+function center(x){
+document.getElementById("centerpoint").innerHTML = x;
+}

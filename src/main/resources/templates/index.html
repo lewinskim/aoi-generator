@@ -15,12 +15,16 @@
 </head>
 <body>
 <div type="text/javascript" th:replace="fragments/header :: header-fragment"></div>
-<div id="legend">Jest ok</div>
+<div id="legend">Jest ok
+    <div id="centerpoint">f
+    </div>
+</div>
 <div id="map"></div>
 <script th:inline="javascript">
                   /*<![CDATA[*/
                   /*[+ [# th:insert="~{../static/scripts/osmmap.js}" /] +]*/
                   /*]]>*/
+
 </script>
 </body>
 </html>
