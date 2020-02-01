@@ -43,9 +43,9 @@ function httpGet(theUrl)
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
     xmlHttp.send( null );
-    center(xmlHttp.responseText);
+    center();
     return xmlHttp.responseText;
 }
-function center(x){
-document.getElementById("centerpoint").innerHTML = x;
+function center(){
+document.getElementById("centerpoint").innerHTML = map.getCenter();
 }
