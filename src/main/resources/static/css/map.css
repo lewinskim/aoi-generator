@@ -1,0 +1,11 @@
+#map {
+        height: 600px;
+        width: 60%;
+        float: left;
+        }
+
+#legend {
+        float: left;
+        width:40%;
+        height: 600px;
+        }
