@@ -9,13 +9,25 @@
     var first_point = [51.7580427,19.4484622];
     var last_point = [51.7593908,19.4585151];
 
+    var myIcon = L.icon({
+            iconUrl: 'images/endicon.png',
+            iconSize: [33, 45],
+            iconAnchor: [18, 44],
+        });
+
+    var blackIcon = L.icon({
+            iconUrl: 'images/black.png',
+            iconSize: [40, 45],
+            iconAnchor: [18, 44],
+        });
+
     var map = L.map('map').addLayer(osm);
     var polyline = L.polyline(geo, {color: 'red'}).addTo(map);
-    L.marker(first_point, {color: 'blue'}).addTo(map);
-    L.marker(last_point, {color: 'red'}).addTo(map);
+    L.marker(first_point, {color: 'blue'}).addTo(map).bindPopup("Start");
+    L.marker(last_point, {icon: myIcon}).addTo(map);
     map.fitBounds(polyline.getBounds());
-
-
+    var cent = map.getCenter();
+    var centr = L.marker(cent, {icon: myIcon}).addTo(map);
 
     map.on('dragend', function onDragEnd(){
     var width = map.getBounds().getEast() - map.getBounds().getWest();
@@ -46,6 +58,19 @@ function httpGet(theUrl)
     center();
     return xmlHttp.responseText;
 }
+
 function center(){
-document.getElementById("centerpoint").innerHTML = map.getCenter();
+cent = map.getCenter();
+centr.setLatLng(cent);
+document.getElementById("centerpoint").innerHTML = cent;
 }
+
+var temppoint = L.marker(cent, {icon: blackIcon}).addTo(map);
+
+map.on('click', function(e){
+temppoint.setLatLng(e.latlng);
+document.getElementById("mouse").innerHTML = e.latlng;
+});
+
+
+
