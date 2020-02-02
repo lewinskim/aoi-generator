@@ -26,8 +26,7 @@
     L.marker(first_point, {color: 'blue'}).addTo(map).bindPopup("Start");
     L.marker(last_point, {icon: myIcon}).addTo(map);
     map.fitBounds(polyline.getBounds());
-    var cent = map.getCenter();
-    var centr = L.marker(cent, {icon: myIcon}).addTo(map);
+
 
     map.on('dragend', function onDragEnd(){
     var width = map.getBounds().getEast() - map.getBounds().getWest();
@@ -36,7 +35,6 @@
     var west = map.getBounds().getWest();
     var north = map.getBounds().getNorth();
     var south = map.getBounds().getSouth();
-
 
     alert (
         'center:' + map.getCenter() +'\n'+
@@ -47,30 +45,5 @@
         '\nwest: ' + west+
         '\nnorth: ' + north+
         '\nsouth: ' + south+ '\n\n'+
-        httpGet('https://api.openstreetmap.org/api/0.6/map?bbox='+west+','+south+','+east+','+north)
     )});
-
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    center();
-    return xmlHttp.responseText;
-}
-
-function center(){
-cent = map.getCenter();
-centr.setLatLng(cent);
-document.getElementById("centerpoint").innerHTML = cent;
-}
-
-var temppoint = L.marker(cent, {icon: blackIcon}).addTo(map);
-
-map.on('click', function(e){
-temppoint.setLatLng(e.latlng);
-document.getElementById("mouse").innerHTML = e.latlng;
-});
-
-
 
